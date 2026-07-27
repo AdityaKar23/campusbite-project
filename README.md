@@ -25,5 +25,5 @@ Import `database/campusbite.sql` into MySQL.
 
 ## Author
 
-Aditya Kar
+Aditya Kar & 
 Sheikh Mayabee Hasan
