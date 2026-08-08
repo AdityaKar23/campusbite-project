@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusBite Database Schema - ERD Diagram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        .table-box {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            background-color: #f8f9fa;
+        }
+        .table-box h3 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        .pk {
+            background-color: #e8f6f3;
+            font-weight: bold;
+        }
+        .fk {
+            background-color: #fef9e7;
+        }
+        .relationship {
+            background-color: #eaf2f8;
+            border: 1px solid #aed6f1;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .ascii-art {
+            font-family: 'Courier New', monospace;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .legend {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        @media print {
+            body {
+                margin: 0;
+            }
+            .table-box {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>CampusBite Database Schema - ERD Diagram</h1>
+    
+    <div class="legend">
+        <h3>Database Overview</h3>
+        <ul>
+            <li><strong>Database Name:</strong> campusbite</li>
+            <li><strong>Engine:</strong> InnoDB</li>
+            <li><strong>Character Set:</strong> utf8mb4</li>
+            <li><strong>Collation:</strong> utf8mb4_general_ci</li>
+            <li><strong>Generated:</strong> 2026-08-07</li>
+        </ul>
+    </div>
+
+    <h2>Tables and Relationships</h2>
+
+    <div class="table-box">
+        <h3>1. CANTEENS (Master Table)</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Key</th>
+                <th>Description</th>
+            </tr>
+            <tr class="pk">
+                <td>canteen_id</td>
+                <td>INT(11)</td>
+                <td>PK</td>
+                <td>Primary Key, Auto-increment</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>VARCHAR(100)</td>
+                <td></td>
+                <td>Canteen name</td>
+            </tr>
+            <tr>
+                <td>location</td>
+                <td>VARCHAR(150)</td>
+                <td></td>
+                <td>Canteen location</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>ENUM('open','closed')</td>
+                <td>INDEX</td>
+                <td>Current status</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-box">
+        <h3>2. STUDENTS (User Table)</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Key</th>
+                <th>Description</th>
+            </tr>
+            <tr class="pk">
+                <td>student_id</td>
+                <td>INT(11)</td>
+                <td>PK</td>
+                <td>Primary Key, Auto-increment</td>
+            </tr>
+            <tr>
+                <td>university_id</td>
+                <td>VARCHAR(50)</td>
+                <td>UNIQUE</td>
+                <td>University ID (unique)</td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>VARCHAR(255)</td>
+                <td></td>
+                <td>Hashed password</td>
+            </tr>
+            <tr>
+                <td>full_name</td>
+                <td>VARCHAR(100)</td>
+                <td></td>
+                <td>Student full name</td>
+            </tr>
+            <tr>
+                <td>department</td>
+                <td>VARCHAR(50)</td>
+                <td></td>
+                <td>Department (nullable)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-box">
+        <h3>3. CANTEEN_OWNERS (User Table)</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Key</th>
+                <th>Description</th>
+            </tr>
+            <tr class="pk">
+                <td>owner_id</td>
+                <td>INT(11)</td>
+                <td>PK</td>
+                <td>Primary Key, Auto-increment</td>
+            </tr>
+            <tr>
+                <td>university_id</td>
+                <td>VARCHAR(50)</td>
+                <td>UNIQUE</td>
+                <td>University ID (unique)</td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>VARCHAR(255)</td>
+                <td></td>
+                <td>Hashed password</td>
+            </tr>
+            <tr>
+                <td>full_name</td>
+                <td>VARCHAR(100)</td>
+                <td></td>
+                <td>Owner full name</td>
+            </tr>
+            <tr class="fk">
+                <td>canteen_id</td>
+                <td>INT(11)</td>
+                <td>FK</td>
+                <td>Foreign key to canteens (nullable)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-box">
+        <h3>4. FOOD (Child Table)</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Key</th>
+                <th>Description</th>
+            </tr>
+            <tr class="pk">
+                <td>food_id</td>
+                <td>INT(11)</td>
+                <td>PK</td>
+                <td>Primary Key, Auto-increment</td>
+            </tr>
+            <tr class="fk">
+                <td>canteen_id</td>
+                <td>INT(11)</td>
+                <td>FK</td>
+                <td>Foreign key to canteens</td>
+            </tr>
+            <tr>
+                <td>food_name</td>
+                <td>VARCHAR(100)</td>
+                <td>INDEX</td>
+                <td>Food item name</td>
+            </tr>
+            <tr>
+                <td>price</td>
+                <td>DECIMAL(8,2)</td>
+                <td></td>
+                <td>Food price</td>
+            </tr>
+            <tr>
+                <td>stock</td>
+                <td>INT(11)</td>
+                <td></td>
+                <td>Available stock (default: 0)</td>
+            </tr>
+            <tr>
+                <td>available</td>
+                <td>TINYINT(1)</td>
+                <td>INDEX</td>
+                <td>Availability status (default: 1)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-box">
+        <h3>5. REVIEWS (Child Table)</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Key</th>
+                <th>Description</th>
+            </tr>
+            <tr class="pk">
+                <td>review_id</td>
+                <td>INT(11)</td>
+                <td>PK</td>
+                <td>Primary Key, Auto-increment</td>
+            </tr>
+            <tr class="fk">
+                <td>canteen_id</td>
+                <td>INT(11)</td>
+                <td>FK</td>
+                <td>Foreign key to canteens</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>INT(11)</td>
+                <td></td>
+                <td>Legacy field (nullable)</td>
+            </tr>
+            <tr class="fk">
+                <td>student_id</td>
+                <td>INT(11)</td>
+                <td>FK</td>
+                <td>Foreign key to students (nullable)</td>
+            </tr>
+            <tr>
+                <td>student_name</td>
+                <td>VARCHAR(100)</td>
+                <td></td>
+                <td>Student name (denormalized)</td>
+            </tr>
+            <tr>
+                <td>university_id</td>
+                <td>VARCHAR(50)</td>
+                <td></td>
+                <td>University ID (denormalized)</td>
+            </tr>
+            <tr>
+                <td>department</td>
+                <td>VARCHAR(50)</td>
+                <td></td>
+                <td>Department (denormalized)</td>
+            </tr>
+            <tr>
+                <td>rating</td>
+                <td>TINYINT(4)</td>
+                <td></td>
+                <td>Star rating (1-5)</td>
+            </tr>
+            <tr>
+                <td>comment</td>
+                <td>TEXT</td>
+                <td></td>
+                <td>Review comment</td>
+            </tr>
+            <tr>
+                <td>created_at</td>
+                <td>TIMESTAMP</td>
+                <td>INDEX</td>
+                <td>Creation timestamp</td>
+            </tr>
+            <tr>
+                <td>updated_at</td>
+                <td>TIMESTAMP</td>
+                <td></td>
+                <td>Last update timestamp</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-box">
+        <h3>6. COMPLAINTS (Child Table)</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Key</th>
+                <th>Description</th>
+            </tr>
+            <tr class="pk">
+                <td>complaint_id</td>
+                <td>INT(11)</td>
+                <td>PK</td>
+                <td>Primary Key, Auto-increment</td>
+            </tr>
+            <tr class="fk">
+                <td>canteen_id</td>
+                <td>INT(11)</td>
+                <td>FK</td>
+                <td>Foreign key to canteens</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>INT(11)</td>
+                <td></td>
+                <td>Legacy field (nullable)</td>
+            </tr>
+            <tr class="fk">
+                <td>student_id</td>
+                <td>INT(11)</td>
+                <td>FK</td>
+                <td>Foreign key to students (nullable)</td>
+            </tr>
+            <tr>
+                <td>student_name</td>
+                <td>VARCHAR(100)</td>
+                <td></td>
+                <td>Student name (denormalized)</td>
+            </tr>
+            <tr>
+                <td>university_id</td>
+                <td>VARCHAR(50)</td>
+                <td></td>
+                <td>University ID (denormalized)</td>
+            </tr>
+            <tr>
+                <td>department</td>
+                <td>VARCHAR(50)</td>
+                <td></td>
+                <td>Department (denormalized)</td>
+            </tr>
+            <tr>
+                <td>message</td>
+                <td>TEXT</td>
+                <td></td>
+                <td>Complaint message</td>
+            </tr>
+            <tr>
+                <td>created_at</td>
+                <td>TIMESTAMP</td>
+                <td>INDEX</td>
+                <td>Creation timestamp</td>
+            </tr>
+            <tr>
+                <td>updated_at</td>
+                <td>TIMESTAMP</td>
+                <td></td>
+                <td>Last update timestamp</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Entity Relationships</h2>
+    
+    <div class="ascii-art">
+                    ┌─────────────┐
+                    │  CANTEENS   │
+                    └──────┬──────┘
+                           │
+         ┌─────────────────┼─────────────────┐
+         │                 │                 │
+         ▼                 ▼                 ▼
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│CANTEEN_OWNERS│  │     FOOD     │  │   REVIEWS    │
+└──────────────┘  └──────────────┘  └──────┬───────┘
+                                            │
+         ┌──────────────────────────────────┘
+         │
+         ▼
+┌──────────────┐
+│   STUDENTS   │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│  COMPLAINTS  │
+└──────────────┘
+    </div>
+
+    <h2>Relationship Details</h2>
+    
+    <div class="relationship">
+        <table>
+            <tr>
+                <th>Relationship</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>canteen_owners.canteen_id → canteens.canteen_id</td>
+                <td>One-to-One/Many</td>
+                <td>Each owner manages one canteen</td>
+            </tr>
+            <tr>
+                <td>food.canteen_id → canteens.canteen_id</td>
+                <td>Many-to-One</td>
+                <td>Each canteen has many food items</td>
+            </tr>
+            <tr>
+                <td>reviews.canteen_id → canteens.canteen_id</td>
+                <td>Many-to-One</td>
+                <td>Each canteen has many reviews</td>
+            </tr>
+            <tr>
+                <td>complaints.canteen_id → canteens.canteen_id</td>
+                <td>Many-to-One</td>
+                <td>Each canteen has many complaints</td>
+            </tr>
+            <tr>
+                <td>reviews.student_id → students.student_id</td>
+                <td>Many-to-One</td>
+                <td>Each student can write many reviews</td>
+            </tr>
+            <tr>
+                <td>complaints.student_id → students.student_id</td>
+                <td>Many-to-One</td>
+                <td>Each student can submit many complaints</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="legend">
+        <h3>Key Legend</h3>
+        <ul>
+            <li><strong>PK</strong> = Primary Key</li>
+            <li><strong>FK</strong> = Foreign Key</li>
+            <li><strong>UNIQUE</strong> = Unique constraint</li>
+            <li><strong>INDEX</strong> = Indexed field</li>
+        </ul>
+        
+        <h3>Notes</h3>
+        <ul>
+            <li><code>user_id</code> in reviews and complaints tables is a legacy field kept for backward compatibility</li>
+            <li><code>student_id</code> is the current foreign key linking to students table</li>
+            <li>The database was migrated from a single <code>users</code> table to separate <code>students</code> and <code>canteen_owners</code> tables</li>
+            <li>Generated on: 2026-08-07</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px; color: #7f8c8d;">
+        <p><strong>CampusBite Database Schema Documentation</strong></p>
+        <p>For printing to PDF: Use Ctrl+P (Windows) or Cmd+P (Mac) and select "Save as PDF"</p>
+    </div>
+</body>
+</html>
